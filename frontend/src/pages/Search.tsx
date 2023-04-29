@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import Results from './Results';
+import useDelay from '../components/useDelay';
 
 
 const Search = () => {
   const [ingredient, setIngredient] = useState("");
   const [name, setName] = useState("");
+
+  const fullIngredient = useDelay(ingredient, 250);
+  const fullName = useDelay(name, 250);
 
   return (
     <div>
@@ -28,7 +32,7 @@ const Search = () => {
             </div>
         </form>
         
-        <Results name={name} ingredient={ingredient}/>
+        <Results name={fullName} ingredient={fullIngredient}/>
     </div>     
   )
 }
