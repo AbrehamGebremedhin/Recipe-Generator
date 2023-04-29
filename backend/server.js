@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const connectDB = require('./config/connectDB');
 const errorHandler = require('./middleware/error');
+const rateLimit = require('express-rate-limit');
 
 dotenv.config({path: './config/config.env'});
 connectDB();
@@ -20,6 +21,14 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+
+//Rate limit
+const limiter =  rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 100
+});
+
+app.use(limiter);
 
 app.use('/recipe', recipeRoute);
 app.use(errorHandler);
